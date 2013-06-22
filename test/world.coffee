@@ -29,3 +29,21 @@ Scenario "Placing a single stone on the board", ->
 
   Then "The stone should be placed on intersection 0x0", ->
     board.hasStoneAt(0,0).should.equal(true)
+
+Scenario "Trying to place a stone where there already is a stone", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "Placing a stone on intersection 0x0", ->
+    board.placeStone(0,0)
+
+  And "Placing another stone on intersection 0x0", ->
+    board.placeStone(0,0)
+
+  Then "Then there should be an error raised", ->
+    board.lastMessage().should.include("already placed")
+
+
+
