@@ -21,14 +21,20 @@ Scenario "Placing a stone on the corner and asking for its liberties", ->
 Scenario "Placing a stone on a wall and asking for its liberties", ->
   board = null
 
-  Given "A board with 9x9 lines", ->
-    board = new Board(9)
+  setupEdge = (rowValues, columnValues) ->
+    for x in rowValues
+      for y in columnValues
+        Given "A board with 9x9 lines", ->
+          board = new Board(9)
 
-  When "Placing a stone on intersection 0x5", ->
-    board.placeStone(0,5)
+        When "Placing a stone on edge #{x}x#{y}", ->
+          board.placeStone(x,y)
+        
+        Then "The stone should have 3 liberties", ->
+          board.libertiesFor(x,y).should.equal(3)
 
-  Then "The stone should have 3 liberties", ->
-    board.libertiesFor(0,5).should.equal(3)
-
-
+  setupEdge([0], [1..7])
+  setupEdge([8], [1..7])
+  setupEdge([1..7], [0])
+  setupEdge([1..7], [8])
 
