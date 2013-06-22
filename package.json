@@ -1,0 +1,15 @@
+{
+  "name": "govick",
+  "version": "0.0.0",
+  "description": "Go written in JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/robashton/govick.git"
+  },
+  "author": "Rob and Vick",
+  "license": "BSD"
+}
