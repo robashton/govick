@@ -11,5 +11,12 @@
     "url": "git://github.com/robashton/govick.git"
   },
   "author": "Rob and Vick",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-exec": "~0.4.1",
+    "coffee-script": "~1.6.3",
+    "should": "~1.2.2",
+    "mocha-cakes": "~0.9.0"
+  }
 }
