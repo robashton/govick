@@ -46,4 +46,3 @@ Scenario "Trying to place a stone where there already is a stone", ->
     board.lastMessage().should.include("already placed")
 
 
-
