@@ -18,3 +18,14 @@ Scenario "Creating and empty board", ->
   And "The board should have no stones on it", ->
     board.numberOfStones().should.equal(0)
 
+Scenario "Placing a single stone on the board", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "Placing a stone on intersection 0x0", ->
+    board.placeStone(0,0)
+
+  Then "The stone should be placed on intersection 0x0", ->
+    board.hasStoneAt(0,0).should.equal(true)
