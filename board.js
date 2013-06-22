@@ -31,27 +31,17 @@ Board.prototype = {
     return this._lastMessage
   },
   libertiesFor: function(x,y) {
-    if(this.isTopLeft(x,y))
-      return 2
-    if(this.isTopRight(x,y))
-      return 2
-    if(this.isBottomLeft(x,y))
-      return 2
-    if(this.isBottomRight(x,y))
-      return 2
-    return 3
+    var liberties = 0
+    liberties += this.collectLibertiesFor(x-1, y)
+    liberties += this.collectLibertiesFor(x+1, y)
+    liberties += this.collectLibertiesFor(x, y+1)
+    liberties += this.collectLibertiesFor(x, y-1)
+    return liberties
   },
-  isTopLeft: function(x,y) {
-    return (x === 0 && y === 0)
-  },
-  isTopRight: function(x,y) {
-    return (x === this._size-1 && y === 0)
-  },
-  isBottomLeft: function(x,y) {
-    return (x === 0 && y === this._size-1)
-  },
-  isBottomRight: function(x,y) {
-    return (x === this._size-1 && y === this._size-1)
+  collectLibertiesFor: function(x,y) {
+    if(x < 0 || y < 0) return 0
+    if(x >= this._size || y >= this._size) return 0
+    return this.hasStoneAt(x,y) ? 0 : 1
   }
 }
 module.exports = Board
