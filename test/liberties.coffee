@@ -38,3 +38,21 @@ Scenario "Placing a stone on a wall and asking for its liberties", ->
   setupEdge([1..7], [0])
   setupEdge([1..7], [8])
 
+
+Scenario "Placing a stone in the middle of the board and asking for its liberties", ->
+  board = null
+
+  setupCell = (rowValues, columnValues) ->
+    for x in rowValues
+      for y in columnValues
+        Given "A board with 9x9 lines", ->
+          board = new Board(9)
+
+        When "Placing a stone on middle #{x}x#{y}", ->
+          board.placeStone(x,y)
+        
+        Then "The stone should have 4 liberties", ->
+          board.libertiesFor(x,y).should.equal(4)
+
+  setupCell([1..7], [1..7])
+
