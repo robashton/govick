@@ -115,5 +115,53 @@ Scenario "The liberties of three adjacent stones of the same colour", ->
     board.libertiesFor(5,6).should.equal(7)
    
   Then "The stone 6x6 should have 7 liberties", ->
-    board.libertiesFor(5,6).should.equal(7)
+    board.libertiesFor(6,6).should.equal(7)
 
+
+Scenario "The liberties of three stones, one black, two white", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "Placing a white stone on 5x5", ->
+    board.placeWhiteStone(5,5)
+
+  And "Placing a black stone on 5x6", ->
+    board.placeBlackStone(5,6)
+
+  And "Placing a white stone on 6x6", ->
+    board.placeWhiteStone(6,6)
+  
+  Then "The first white stone should have 3 liberties", ->
+    board.libertiesFor(5,5).should.equal(3)
+
+  Then "The black stone should have 2 liberties", ->
+    board.libertiesFor(5,6).should.equal(2)
+   
+  Then "the second white stone should have 3 liberties", ->
+    board.libertiesFor(6,6).should.equal(3)
+
+
+Scenario "The liberties of four stones, one black, three white", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "Placing white stones on 5x5, 5x6 and 6x6", ->
+    board.placeWhiteStone(5,5)
+    board.placeWhiteStone(5,6)
+    board.placeWhiteStone(6,6)
+
+  And "Placing a black stone on 6x5", ->
+    board.placeBlackStone(6,5)
+
+  Then "the white stones should all have 6 liberties", ->
+    board.libertiesFor(5,5).should.equal(6)
+    board.libertiesFor(5,6).should.equal(6)
+    board.libertiesFor(6,6).should.equal(6)
+
+  Then "The black stone should have 2 liberties", ->
+    board.libertiesFor(6,5).should.equal(2)
+   
