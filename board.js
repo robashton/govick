@@ -1,10 +1,13 @@
 var libertyCalculator = require('./libertycalculator')
+  , EventEmitter = require('events').EventEmitter
+  , _ = require('underscore')
 
 var Board = function(size){
+  EventEmitter.call(this)
   this._size = size
   this._grid = new Array(size * size)
-  this._lastMessage = ""
 }
+
 Board.prototype = {
   width: function(){
     return this._size
@@ -17,8 +20,9 @@ Board.prototype = {
   },
   placeStone: function(x,y,colour) {
     if(this.hasStoneAt(x,y)) 
-      return this.showErrorMessage("Stone is already placed here")
+      return this.emit('stone-ignored', x, y)
     this._grid[this.indexFor(x,y)] = colour || "white"
+    this.emit('stone-placed', x, y)
   },
   placeWhiteStone: function(x,y){
     this.placeStone(x,y,"white")
@@ -44,15 +48,10 @@ Board.prototype = {
   indexFor: function(x,y) {
     return x + y * this._size
   },
-  showErrorMessage: function(message) {
-    this._lastMessage = message
-  },
-  lastMessage: function()  {
-    return this._lastMessage
-  },
   libertiesFor: function(x,y) {
     return libertyCalculator(x,y,this)
   },
 }
+_.extend(Board.prototype, EventEmitter.prototype)
 
 module.exports = Board

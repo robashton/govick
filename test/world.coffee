@@ -32,9 +32,12 @@ Scenario "Placing a single stone on the board", ->
 
 Scenario "Trying to place a stone where there already is a stone", ->
   board = null
+  ignored = false
 
   Given "A board with 9x9 lines", ->
     board = new Board(9)
+    board.on "stone-ignored", ->
+      ignored = true
 
   When "Placing a stone on intersection 0x0", ->
     board.placeStone(0,0)
@@ -43,6 +46,6 @@ Scenario "Trying to place a stone where there already is a stone", ->
     board.placeStone(0,0)
 
   Then "Then there should be an error raised", ->
-    board.lastMessage().should.include("already placed")
+    ignored.should.equal(true)
 
 
