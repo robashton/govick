@@ -72,3 +72,19 @@ Scenario "Trying to place a stone where it will have no liberties", ->
 
   Then "Then there should be an error raised", ->
     ignored.should.equal(true)
+
+Scenario "Removing a stone when it is devoid of liberties", ->
+  board = null
+
+  Given "A white stone with one liberty", ->
+    board = new Board(9)
+    board.placeWhiteStone(5,5)
+    board.placeBlackStone(5,4)
+    board.placeBlackStone(6,5)
+    board.placeBlackStone(5,6)
+
+  When "Placing a black stone on the white stone's remaining liberty", ->
+    board.placeBlackStone(4,5)
+
+  Then "The white stone should be removed from the board", ->
+    board.hasStoneAt(5,5).should.equal(false)

@@ -6,6 +6,7 @@ var Board = function(size){
   EventEmitter.call(this)
   this._size = size
   this._grid = new Array(size * size)
+  this.on("stone-placed",this.onStonePlaced.bind(this))
 }
 
 Board.prototype = {
@@ -50,6 +51,20 @@ Board.prototype = {
   },
   libertiesFor: function(x,y,colour) {
     return libertyCalculator(x,y,this,colour)
+  },
+  onStonePlaced: function(x,y) {
+    var colourPlaced = this.colourAt(x,y)
+    this.checkForLibertyBasedRemoval(x-1,y,colourPlaced)
+    this.checkForLibertyBasedRemoval(x,y-1,colourPlaced)
+    this.checkForLibertyBasedRemoval(x+1,y,colourPlaced)
+    this.checkForLibertyBasedRemoval(x,y+1,colourPlaced)
+  },
+  checkForLibertyBasedRemoval: function(x,y,colour) {
+    if (this.colourAt(x,y) === colour) return
+    if (this.libertiesFor(x,y) === 0) this.removeStoneAt(x,y)
+  },
+  removeStoneAt: function(x,y) {
+    this._grid[this.indexFor(x,y)] = ""
   },
 }
 _.extend(Board.prototype, EventEmitter.prototype)
