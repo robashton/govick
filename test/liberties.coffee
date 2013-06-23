@@ -165,3 +165,32 @@ Scenario "The liberties of four stones, one black, three white", ->
   Then "The black stone should have 2 liberties", ->
     board.libertiesFor(6,5).should.equal(2)
    
+Scenario "The liberties of a square eye", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "A bunch of white stones in 3x3 eye formation", ->
+    board.placeWhiteStone(4,4)
+    board.placeWhiteStone(5,4)
+    board.placeWhiteStone(6,4)
+    
+    board.placeWhiteStone(4,5)
+    board.placeWhiteStone(6,5)
+
+    board.placeWhiteStone(4,6)
+    board.placeWhiteStone(5,6)
+    board.placeWhiteStone(6,6)
+
+  Then "the white stones should all have 13 liberties", ->
+    board.libertiesFor(4,4).should.equal(13)
+    board.libertiesFor(5,4).should.equal(13)
+    board.libertiesFor(6,4).should.equal(13)
+    
+    board.libertiesFor(4,5).should.equal(13)
+    board.libertiesFor(6,5).should.equal(13)
+
+    board.libertiesFor(4,6).should.equal(13)
+    board.libertiesFor(5,6).should.equal(13)
+    board.libertiesFor(6,6).should.equal(13)
