@@ -48,4 +48,27 @@ Scenario "Trying to place a stone where there already is a stone", ->
   Then "Then there should be an error raised", ->
     ignored.should.equal(true)
 
+Scenario "Trying to place a stone where it will have no liberties", ->
+  board = null
+  ignored = false
 
+  Given "A board with a 3x3 eye formation", ->
+    board = new Board(9)
+    board.placeWhiteStone(4,4)
+    board.placeWhiteStone(5,4)
+    board.placeWhiteStone(6,4)
+    
+    board.placeWhiteStone(4,5)
+    board.placeWhiteStone(6,5)
+
+    board.placeWhiteStone(4,6)
+    board.placeWhiteStone(5,6)
+    board.placeWhiteStone(6,6)
+    board.on "stone-ignored", ->
+      ignored = true
+
+  When "Placing a stone in the middle of the eye", ->
+    board.placeBlackStone(5,5)
+
+  Then "Then there should be an error raised", ->
+    ignored.should.equal(true)

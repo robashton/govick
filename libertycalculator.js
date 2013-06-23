@@ -1,7 +1,7 @@
-module.exports = function(x,y, board) {
+module.exports = function(x,y, board,colour) {
   var visited = {}
     ,  count = 0
-    , colour = board.colourAt(x,y)
+  colour = colour || board.colourAt(x,y)
 
   collectLibertiesAround(x,y)
   return count

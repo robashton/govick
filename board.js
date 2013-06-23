@@ -19,7 +19,7 @@ Board.prototype = {
     return 0
   },
   placeStone: function(x,y,colour) {
-    if(this.hasStoneAt(x,y)) 
+    if(this.hasStoneAt(x,y) || this.libertiesFor(x,y,colour) === 0) 
       return this.emit('stone-ignored', x, y)
     this._grid[this.indexFor(x,y)] = colour || "white"
     this.emit('stone-placed', x, y)
@@ -48,8 +48,8 @@ Board.prototype = {
   indexFor: function(x,y) {
     return x + y * this._size
   },
-  libertiesFor: function(x,y) {
-    return libertyCalculator(x,y,this)
+  libertiesFor: function(x,y,colour) {
+    return libertyCalculator(x,y,this,colour)
   },
 }
 _.extend(Board.prototype, EventEmitter.prototype)
