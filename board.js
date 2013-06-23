@@ -1,6 +1,7 @@
 var libertyCalculator = require('./libertycalculator')
   , EventEmitter = require('events').EventEmitter
   , _ = require('underscore')
+  , util = require('util')
 
 var Board = function(size){
   EventEmitter.call(this)
@@ -59,13 +60,24 @@ Board.prototype = {
     this.checkForLibertyBasedRemoval(x+1,y,colourPlaced)
     this.checkForLibertyBasedRemoval(x,y+1,colourPlaced)
   },
-  checkForLibertyBasedRemoval: function(x,y,colour) {
-    if (this.colourAt(x,y) === colour) return
-    if (this.libertiesFor(x,y) === 0) this.removeStoneAt(x,y)
+  checkForLibertyBasedRemoval: function(x,y, colourPlaced) {
+    if(!this.hasStoneAt(x,y)) return
+    if (this.colourAt(x,y) === colourPlaced) return
+    if (this.libertiesFor(x,y) === 0)  {
+      this.removeColouredGroupContaining(x,y, colourPlaced === "black" ? "white" : "black")
+    }
   },
-  removeStoneAt: function(x,y) {
+  removeColouredGroupContaining: function(x,y, colour) {
+    if(this.colourAt(x,y) !== colour) return
     this._grid[this.indexFor(x,y)] = ""
+    this.removeColouredGroupContaining(x-1, y, colour)
+    this.removeColouredGroupContaining(x+1, y, colour)
+    this.removeColouredGroupContaining(x, y-1, colour)
+    this.removeColouredGroupContaining(x, y+1, colour)
   },
+  dump: function() {
+    console.log(util.inspect(this._grid))
+  }
 }
 _.extend(Board.prototype, EventEmitter.prototype)
 

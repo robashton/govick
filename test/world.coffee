@@ -88,3 +88,23 @@ Scenario "Removing a stone when it is devoid of liberties", ->
 
   Then "The white stone should be removed from the board", ->
     board.hasStoneAt(5,5).should.equal(false)
+
+Scenario "Removing multiple stones when they are devoid of liberties", ->
+  board = null
+
+  Given "Two adjacent white stones with one liberty", ->
+    board = new Board(9)
+    board.placeWhiteStone(5,4)
+    board.placeWhiteStone(5,5)
+    board.placeBlackStone(4,4)
+    board.placeBlackStone(4,5)
+    board.placeBlackStone(5,6)
+    board.placeBlackStone(6,4)
+    board.placeBlackStone(6,5)
+
+  When "Placing a black stone on the white stone's remaining liberty", ->
+    board.placeBlackStone(5,3)
+
+  Then "Both white stones should be removed from the board", ->
+    board.hasStoneAt(5,4).should.equal(false)
+    board.hasStoneAt(5,5).should.equal(false)
