@@ -57,20 +57,38 @@ Scenario "Placing a stone in the middle of the board and asking for its libertie
   setupCell([1..7], [1..7])
 
 
-Scenario "The liberties of two adjacent stones", ->
+Scenario "The liberties of two adjacent stones of different colours", ->
   board = null
 
   Given "A board with 9x9 lines", ->
     board = new Board(9)
 
-  When "Placing a stone on 5x5", ->
-    board.placeStone(5,5)
+  When "Placing a white stone on 5x5", ->
+    board.placeWhiteStone(5,5)
 
-  And "Placing a stone on 5x6", ->
-    board.placeStone(5,6)
+  And "Placing a black stone on 5x6", ->
+    board.placeBlackStone(5,6)
   
   Then "The stone 5x5 should have 3 liberties", ->
     board.libertiesFor(5,5).should.equal(3)
 
   Then "The stone 5x6 should have 3 liberties", ->
     board.libertiesFor(5,6).should.equal(3)
+
+Scenario "The liberties of two adjacent stones of the same colour", ->
+  board = null
+
+  Given "A board with 9x9 lines", ->
+    board = new Board(9)
+
+  When "Placing a white stone on 5x5", ->
+    board.placeWhiteStone(5,5)
+
+  And "Placing a white stone on 5x6", ->
+    board.placeWhiteStone(5,6)
+  
+  Then "The stone 5x5 should have 6 liberties", ->
+    board.libertiesFor(5,5).should.equal(6)
+
+  Then "The stone 5x6 should have 6 liberties", ->
+    board.libertiesFor(5,6).should.equal(6)
