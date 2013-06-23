@@ -7,7 +7,6 @@ module.exports = function(x,y, board) {
   return count
 
   function collectLibertiesAround(x, y) {
-    if(touchCacheFor(x,y)) return
     collectLibertiesFor(x-1, y)
     collectLibertiesFor(x+1, y)
     collectLibertiesFor(x, y+1)
@@ -24,6 +23,7 @@ module.exports = function(x,y, board) {
   function collectLibertiesFor(x,y) {
     if(x < 0 || y < 0) return
     if(x >= board.width() || y >= board.height()) return
+    if(touchCacheFor(x,y)) return
     if(!board.hasStoneAt(x,y)) return count++
     if(board.hasStoneWithColourAt(x,y, colour)) 
       return collectLibertiesAround(x,y)

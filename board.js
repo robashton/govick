@@ -54,4 +54,5 @@ Board.prototype = {
     return libertyCalculator(x,y,this)
   },
 }
+
 module.exports = Board
