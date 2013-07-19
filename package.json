@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git://github.com/robashton/govick.git"
   },
-  "author": "Rob and Vick",
+  "author": "rob and vixed",
   "license": "BSD",
   "devDependencies": {
     "grunt": "~0.4.1",
